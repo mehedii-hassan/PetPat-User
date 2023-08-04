@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="@string/otpMessage"
+            android:text="Otp verification"
             android:textColor="#333333"
             android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
