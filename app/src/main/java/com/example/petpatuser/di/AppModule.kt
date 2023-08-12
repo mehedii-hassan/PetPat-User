@@ -2,6 +2,7 @@ package com.example.petpatuser.di
 
 import com.example.petpatuser.network.ApiService
 import com.example.petpatuser.utils.AuthInterceptor
+import com.example.petpatuser.utils.SessionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -20,7 +21,7 @@ object AppModule {
     fun provideOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
             .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))
-            .addInterceptor(AuthInterceptor("YOUR_ACCESS_TOKEN"))
+            .addInterceptor(AuthInterceptor("token "))
             .build()
     }
 
@@ -28,7 +29,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("YOUR_BASE_URL")
+            .baseUrl("http://178.128.207.239")
             .addConverterFactory(GsonConverterFactory.create())
             .client(okHttpClient)
             .build()

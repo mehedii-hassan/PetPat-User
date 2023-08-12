@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import com.example.petpatuser.R
 import com.example.petpatuser.databinding.FragmentLoginBinding
+import com.example.petpatuser.utils.SessionManager
 import com.example.petpatuser.viewmodels.LoginViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,20 +38,28 @@ class LoginFragment : Fragment() {
         val password = binding.etPassword.text.toString()
         viewModel.login(phoneNumber, password)
 
-        /*viewModel.login(phoneNumber, password)
-            .observe(this, { result ->
-                when (result) {
-                    is LoginResult.Success -> {
-                        // Handle successful login response
-                        val loginResponse = result.data
-                    }
+        viewModel.getLoginResponse().observe(viewLifecycleOwner) {
+            if (it.success) {
+                Toast.makeText(context, "Login successfully done", Toast.LENGTH_SHORT).show()
+                SessionManager.saveAccessToken(requireContext(), it.data.access_token)
 
-                    is LoginResult.Error -> {
-                        // Handle login error
-                        val errorMessage = result.message
-                    }
-                }
-            })*/
+            }
+        }
+
+        /* viewModel.login(phoneNumber, password)
+             .observe(this, { result ->
+                 when (result) {
+                     is LoginResult.Success -> {
+                         // Handle successful login response
+                         val loginResponse = result.data
+                     }
+
+                     is LoginResult.Error -> {
+                         // Handle login error
+                         val errorMessage = result.message
+                     }
+                 }
+             })*/
     }
 
     private fun observeLoginResult() {
